@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
+import { User, Bell, Lock, Settings as SettingsIcon, HelpCircle } from 'lucide-react';
 import api from '../utils/api.js';
 import toast from 'react-hot-toast';
 import { useAuth } from '../context/AuthContext.jsx';
@@ -184,10 +185,11 @@ const Settings = () => {
   };
 
   const tabs = [
-    { id: 'profile', name: 'Profile', icon: '👤' },
-    { id: 'notifications', name: 'Notifications', icon: '🔔' },
-    { id: 'privacy', name: 'Privacy', icon: '🔒' },
-    { id: 'analysis', name: 'Analysis', icon: '⚙️' }
+    { id: 'profile', name: 'Profile', icon: <User className="w-4 h-4" /> },
+    { id: 'notifications', name: 'Notifications', icon: <Bell className="w-4 h-4" /> },
+    { id: 'privacy', name: 'Privacy', icon: <Lock className="w-4 h-4" /> },
+    { id: 'analysis', name: 'Analysis', icon: <SettingsIcon className="w-4 h-4" /> },
+    { id: 'help', name: 'Help', icon: <HelpCircle className="w-4 h-4" /> }
   ];
 
   return (
@@ -216,7 +218,7 @@ const Settings = () => {
                       : 'text-gray-600 hover:bg-gray-50 hover:text-gray-900'
                   }`}
                 >
-                  <span className="text-lg mr-3">{tab.icon}</span>
+                  <span className="mr-3">{tab.icon}</span>
                   {tab.name}
                 </button>
               ))}
@@ -871,6 +873,83 @@ const Settings = () => {
                         <div>
                           <h4 className="text-sm font-semibold text-blue-900 mb-1">About Analysis Settings</h4>
                           <p className="text-xs text-blue-700">These settings control how your files are analyzed. Auto-save keeps all results in your history. Higher confidence thresholds mean stricter detection. Larger file sizes may take longer to process.</p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </motion.div>
+              )}
+
+              {activeTab === 'help' && (
+                <motion.div
+                  initial={{ opacity: 0, x: 20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ duration: 0.3 }}
+                >
+                  <div className="flex items-center justify-between mb-6">
+                    <div>
+                      <h2 className="text-xl font-semibold text-gray-900">Help & Support</h2>
+                      <p className="text-sm text-gray-500 mt-1">Get help and find answers to common questions</p>
+                    </div>
+                  </div>
+                  
+                  <div className="space-y-6">
+                    {/* Quick Help Cards */}
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                      <motion.a
+                        href="/help"
+                        className="group bg-gradient-to-br from-blue-50 to-indigo-50 border-2 border-blue-100 rounded-2xl p-6 hover:shadow-lg transition-all duration-300"
+                        whileHover={{ y: -2 }}
+                      >
+                        <div className="flex items-center space-x-4">
+                          <div className="w-12 h-12 bg-blue-500 rounded-xl flex items-center justify-center group-hover:scale-110 transition-transform">
+                            <HelpCircle className="w-6 h-6 text-white" />
+                          </div>
+                          <div>
+                            <h3 className="text-lg font-semibold text-gray-900 group-hover:text-blue-600 transition-colors">Help Center</h3>
+                            <p className="text-sm text-gray-600">Browse FAQs and guides</p>
+                          </div>
+                        </div>
+                      </motion.a>
+
+                      <motion.a
+                        href="mailto:support@deepfakedetector.com"
+                        className="group bg-gradient-to-br from-green-50 to-emerald-50 border-2 border-green-100 rounded-2xl p-6 hover:shadow-lg transition-all duration-300"
+                        whileHover={{ y: -2 }}
+                      >
+                        <div className="flex items-center space-x-4">
+                          <div className="w-12 h-12 bg-green-500 rounded-xl flex items-center justify-center group-hover:scale-110 transition-transform">
+                            <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                            </svg>
+                          </div>
+                          <div>
+                            <h3 className="text-lg font-semibold text-gray-900 group-hover:text-green-600 transition-colors">Contact Support</h3>
+                            <p className="text-sm text-gray-600">Email us for assistance</p>
+                          </div>
+                        </div>
+                      </motion.a>
+                    </div>
+
+                    {/* System Info */}
+                    <div className="bg-gray-50 rounded-2xl p-6">
+                      <h3 className="text-lg font-semibold text-gray-900 mb-4">System Information</h3>
+                      <div className="grid grid-cols-2 gap-4 text-sm">
+                        <div>
+                          <span className="text-gray-600">Version:</span>
+                          <span className="ml-2 font-medium">v2.1.0</span>
+                        </div>
+                        <div>
+                          <span className="text-gray-600">Status:</span>
+                          <span className="ml-2 font-medium text-green-600">Online</span>
+                        </div>
+                        <div>
+                          <span className="text-gray-600">Last Updated:</span>
+                          <span className="ml-2 font-medium">{new Date().toLocaleDateString()}</span>
+                        </div>
+                        <div>
+                          <span className="text-gray-600">Uptime:</span>
+                          <span className="ml-2 font-medium">99.9%</span>
                         </div>
                       </div>
                     </div>

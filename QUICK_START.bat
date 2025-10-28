@@ -36,7 +36,7 @@ if not exist "backend\venv" if not exist "frontend\node_modules" (
 
 echo Starting DeepFake Detector...
 echo.
-echo Backend: http://localhost:5000
+echo Backend: http://localhost:8000
 echo Frontend: http://localhost:3000
 echo.
 

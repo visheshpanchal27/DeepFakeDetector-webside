@@ -24,15 +24,31 @@ if exist "backend\.env" (
 )
 
 echo [STEP 1/5] Checking Python installation...
-python --version >nul 2>&1
-if %errorLevel% neq 0 (
-    echo [ERROR] Python not found!
-    echo Please install Python 3.8+ from: https://www.python.org/downloads/
-    echo Make sure to check "Add Python to PATH" during installation
-    pause
-    exit /b 1
+set PYTHON_CMD=
+py --version >nul 2>&1
+if %errorLevel% equ 0 (
+    set PYTHON_CMD=py
+    echo [OK] Python found (py command)
+    goto :python_found
 )
-echo [OK] Python found
+python --version >nul 2>&1
+if %errorLevel% equ 0 (
+    set PYTHON_CMD=python
+    echo [OK] Python found (python command)
+    goto :python_found
+)
+python3 --version >nul 2>&1
+if %errorLevel% equ 0 (
+    set PYTHON_CMD=python3
+    echo [OK] Python found (python3 command)
+    goto :python_found
+)
+echo [ERROR] Python not found!
+echo Please install Python 3.8+ from: https://www.python.org/downloads/
+echo Make sure to check "Add Python to PATH" during installation
+pause
+exit /b 1
+:python_found
 echo.
 
 echo [STEP 2/5] Checking Node.js installation...
@@ -54,7 +70,7 @@ if not exist "requirements.txt" (
     pause
     exit /b 1
 )
-pip install -r requirements.txt
+%PYTHON_CMD% -m pip install -r requirements.txt
 if %errorLevel% neq 0 (
     echo [ERROR] Failed to install backend dependencies
     cd ..
@@ -121,7 +137,7 @@ echo JWT_SECRET=%JWT_SECRET%
 echo SECRET_KEY=%JWT_SECRET%
 echo.
 echo # Server
-echo PORT=5000
+echo PORT=8000
 echo FLASK_ENV=production
 ) > backend\.env
 
@@ -130,7 +146,7 @@ echo.
 
 :: Create frontend .env file
 (
-echo REACT_APP_API_URL=http://localhost:5000
+echo REACT_APP_API_URL=http://localhost:8000
 ) > frontend\.env
 
 echo [OK] Frontend configuration created
@@ -144,7 +160,7 @@ echo.
 :start_app
 echo Starting DeepFake Detector...
 echo.
-echo Backend will start on: http://localhost:5000
+echo Backend will start on: http://localhost:8000
 echo Frontend will start on: http://localhost:3000
 echo.
 echo Press Ctrl+C to stop the servers
@@ -152,7 +168,7 @@ echo.
 pause
 
 :: Start backend in new window
-start "DeepFake Detector - Backend" cmd /k "cd backend && python app_new.py"
+start "DeepFake Detector - Backend" cmd /k "cd backend && %PYTHON_CMD% app_new.py"
 
 :: Wait for backend to start
 echo Waiting for backend to start...
@@ -166,7 +182,7 @@ echo ========================================
 echo   Application Started!
 echo ========================================
 echo.
-echo Backend: http://localhost:5000
+echo Backend: http://localhost:8000
 echo Frontend: http://localhost:3000
 echo.
 echo Two new windows have opened for backend and frontend

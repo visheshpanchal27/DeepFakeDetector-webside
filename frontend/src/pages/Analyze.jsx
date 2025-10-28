@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef, useCallback, useMemo } from 'react';
 import { motion } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
+import { Search, FolderOpen, Brain, Zap, CheckCircle, Clock, Microscope, Target, Sparkles, BarChart3 } from 'lucide-react';
 import api from '../utils/api';
 import FileUpload from '../components/UI/FileUpload.jsx';
 import LoadingSpinner from '../components/UI/LoadingSpinner.jsx';
@@ -173,8 +174,9 @@ const Analyze = React.memo(() => {
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6 }}
       >
-        <div className="inline-flex items-center px-4 py-2 bg-blue-100 rounded-full text-blue-800 text-sm font-medium mb-6">
-          🔍 Advanced AI Detection
+        <div className="inline-flex items-center gap-2 px-4 py-2 bg-blue-100 rounded-full text-blue-800 text-sm font-medium mb-6">
+          <Search className="w-4 h-4" />
+          Advanced AI Detection
         </div>
         <h1 className="text-5xl md:text-6xl font-extrabold mb-6">
           <span className="gradient-text">Analyze</span>
@@ -197,7 +199,7 @@ const Analyze = React.memo(() => {
           <div className="modern-card">
             <div className="flex items-center mb-6">
               <div className="w-10 h-10 gradient-bg rounded-xl flex items-center justify-center mr-3">
-                <span className="text-white text-lg">📁</span>
+                <FolderOpen className="w-5 h-5 text-white" />
               </div>
               <h2 className="text-2xl font-bold text-gray-900">
                 Upload Your File
@@ -306,15 +308,15 @@ const Analyze = React.memo(() => {
                 {/* Real-time Stage Indicators */}
                 <div className="mt-6 grid grid-cols-4 gap-3">
                   {[
-                    { name: 'Loading', icon: '📁', threshold: 20 },
-                    { name: 'Deep Learning', icon: '🧠', threshold: 50 },
-                    { name: 'Physics Analysis', icon: '⚡', threshold: 80 },
-                    { name: 'Complete', icon: '✅', threshold: 100 }
+                    { name: 'Loading', icon: <FolderOpen className="w-5 h-5" />, threshold: 20 },
+                    { name: 'Deep Learning', icon: <Brain className="w-5 h-5" />, threshold: 50 },
+                    { name: 'Physics Analysis', icon: <Zap className="w-5 h-5" />, threshold: 80 },
+                    { name: 'Complete', icon: <CheckCircle className="w-5 h-5" />, threshold: 100 }
                   ].map((item, idx) => (
                     <div key={idx} className={`flex flex-col items-center p-3 rounded-lg transition-all ${
                       progress >= item.threshold ? 'bg-green-50 border-2 border-green-500' : 'bg-gray-50 border-2 border-gray-200'
                     }`}>
-                      <div className="text-2xl mb-1">{item.icon}</div>
+                      <div className="mb-1">{item.icon}</div>
                       <span className={`text-xs font-medium text-center ${
                         progress >= item.threshold ? 'text-green-700' : 'text-gray-500'
                       }`}>
@@ -343,8 +345,8 @@ const Analyze = React.memo(() => {
               className="card"
             >
               <div className="flex items-center justify-between mb-4">
-                <h3 className="text-lg font-semibold text-gray-900 flex items-center">
-                  <span className="mr-2">🕒</span>
+                <h3 className="text-lg font-semibold text-gray-900 flex items-center gap-2">
+                  <Clock className="w-5 h-5 mr-2" />
                   Recent Analyses
                 </h3>
                 <button
@@ -415,7 +417,7 @@ const Analyze = React.memo(() => {
           {!selectedFile && !analyzing && !result && recentAnalyses.length === 0 && (
             <div className="card text-center text-gray-500">
               <div className="w-16 h-16 bg-gray-100 rounded-full mx-auto mb-4 flex items-center justify-center">
-                <span className="text-2xl">📊</span>
+                <BarChart3 className="w-8 h-8 text-gray-600" />
               </div>
               <p>Analysis results will appear here</p>
             </div>
@@ -426,7 +428,7 @@ const Analyze = React.memo(() => {
       <div className="mt-12 grid grid-cols-1 md:grid-cols-3 gap-6">
         <div className="text-center">
           <div className="w-12 h-12 bg-blue-100 rounded-lg mx-auto mb-3 flex items-center justify-center">
-            <span className="text-blue-600 text-xl">🔬</span>
+            <Microscope className="w-6 h-6 text-blue-600" />
           </div>
           <h3 className="font-semibold text-gray-900 mb-2">Physics-Based Detection</h3>
           <p className="text-sm text-gray-600">No AI • Pure computer vision</p>
@@ -434,7 +436,7 @@ const Analyze = React.memo(() => {
         
         <div className="text-center">
           <div className="w-12 h-12 bg-green-100 rounded-lg mx-auto mb-3 flex items-center justify-center">
-            <span className="text-green-600 text-xl">🎯</span>
+            <Target className="w-6 h-6 text-green-600" />
           </div>
           <h3 className="font-semibold text-gray-900 mb-2">Multi-Stage Classification</h3>
           <p className="text-sm text-gray-600">Human • Enhanced • AI • Generated</p>
@@ -442,7 +444,7 @@ const Analyze = React.memo(() => {
         
         <div className="text-center">
           <div className="w-12 h-12 bg-purple-100 rounded-lg mx-auto mb-3 flex items-center justify-center">
-            <span className="text-purple-600 text-xl">✨</span>
+            <Sparkles className="w-6 h-6 text-purple-600" />
           </div>
           <h3 className="font-semibold text-gray-900 mb-2">Enhancement Detection</h3>
           <p className="text-sm text-gray-600">Filters • AI upscaling • Traces</p>

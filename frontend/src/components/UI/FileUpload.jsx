@@ -1,8 +1,11 @@
 import React, { useCallback, useState, useEffect, useMemo } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useDropzone } from 'react-dropzone';
+import { Video, ImageIcon as Image, FileText, Target, FolderOpen } from 'lucide-react';
 import { useSettings } from '../../context/SettingsContext.jsx';
 // import LazyImage from './LazyImage';
+
+const ImageIcon = Image;
 
 const FileUpload = React.memo(({ onFileSelect, accept, maxSize, multiple = false, selectedFile = null }) => {
   const { settings } = useSettings();
@@ -41,7 +44,7 @@ const FileUpload = React.memo(({ onFileSelect, accept, maxSize, multiple = false
 
       // Get image dimensions
       if (selectedFile.type.startsWith('image/')) {
-        const img = new Image();
+        const img = new window.Image();
         img.onload = () => {
           setFileMetadata({ ...metadata, dimensions: `${img.width} × ${img.height}px` });
         };
@@ -137,7 +140,7 @@ const FileUpload = React.memo(({ onFileSelect, accept, maxSize, multiple = false
                   />
                 )}
                 <div className="absolute top-3 left-3 bg-black/70 backdrop-blur-sm text-white px-3 py-1.5 rounded-full text-xs font-semibold flex items-center space-x-1">
-                  <span>{isVideo ? '🎥' : '🖼️'}</span>
+                  {isVideo ? <Video className="w-3 h-3" /> : <ImageIcon className="w-3 h-3" />}
                   <span>{isVideo ? 'Video' : 'Image'}</span>
                 </div>
                 {uploadProgress < 100 && (
@@ -152,8 +155,9 @@ const FileUpload = React.memo(({ onFileSelect, accept, maxSize, multiple = false
               </div>
               
               <div className="bg-gradient-to-r from-blue-50 to-purple-50 rounded-xl p-4 border border-blue-200">
-                <div className="text-gray-900 font-bold text-base truncate mb-2" title={selectedFile.name}>
-                  📄 {selectedFile.name}
+                <div className="text-gray-900 font-bold text-base truncate mb-2 flex items-center gap-2" title={selectedFile.name}>
+                  <FileText className="w-4 h-4" />
+                  {selectedFile.name}
                 </div>
                 <div className="grid grid-cols-2 gap-2 text-xs text-gray-600">
                   <div className="flex items-center space-x-1">
@@ -208,7 +212,7 @@ const FileUpload = React.memo(({ onFileSelect, accept, maxSize, multiple = false
                   transition={{ duration: 0.5, repeat: isDragActive ? Infinity : 0 }}
                   className="w-20 h-20 mx-auto mb-4 bg-gradient-to-br from-blue-500 to-purple-600 rounded-2xl flex items-center justify-center shadow-lg"
                 >
-                  <span className="text-4xl">{isDragActive ? '🎯' : '📁'}</span>
+                  {isDragActive ? <Target className="w-10 h-10 text-white" /> : <FolderOpen className="w-10 h-10 text-white" />}
                 </motion.div>
                 <motion.p 
                   className="text-2xl font-bold text-gray-900 mb-2"
@@ -231,8 +235,8 @@ const FileUpload = React.memo(({ onFileSelect, accept, maxSize, multiple = false
                     <span>Supported Formats</span>
                   </div>
                   <div className="text-gray-700 text-xs space-y-1">
-                    <div>📷 Images: JPG, PNG, GIF, WebP</div>
-                    <div>🎬 Videos: MP4, AVI, MOV, WebM</div>
+                    <div className="flex items-center gap-1"><ImageIcon className="w-3 h-3" /> Images: JPG, PNG, GIF, WebP</div>
+                    <div className="flex items-center gap-1"><Video className="w-3 h-3" /> Videos: MP4, AVI, MOV, WebM</div>
                   </div>
                 </motion.div>
                 <motion.div 
@@ -244,8 +248,8 @@ const FileUpload = React.memo(({ onFileSelect, accept, maxSize, multiple = false
                     <span>Max File Size</span>
                   </div>
                   <div className="text-gray-700 text-xs space-y-1">
-                    <div>🖼️ Images: Up to {fileSize}MB</div>
-                    <div>🎥 Videos: Up to {fileSize}MB</div>
+                    <div className="flex items-center gap-1"><ImageIcon className="w-3 h-3" /> Images: Up to {fileSize}MB</div>
+                    <div className="flex items-center gap-1"><Video className="w-3 h-3" /> Videos: Up to {fileSize}MB</div>
                   </div>
                 </motion.div>
               </div>

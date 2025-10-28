@@ -6,6 +6,8 @@ import { SettingsProvider } from './context/SettingsContext.jsx';
 import ErrorBoundaryWithRetry from './components/UI/ErrorBoundaryWithRetry.jsx';
 import Navbar from './components/Layout/Navbar.jsx';
 import LoadingSpinner from './components/UI/LoadingSpinner.jsx';
+import Help from './pages/Help.jsx';
+import LiveChat from './pages/LiveChat.jsx';
 
 // Lazy load pages
 const Home = lazy(() => import('./pages/Home.jsx'));
@@ -140,6 +142,8 @@ function AppContent() {
               </ProtectedRoute>
             } 
           />
+              <Route path="/help" element={<Help />} />
+              <Route path="/live-chat" element={<LiveChat />} />
               <Route path="*" element={<Navigate to="/" />} />
             </Routes>
           </Suspense>

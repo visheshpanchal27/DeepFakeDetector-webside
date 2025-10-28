@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
+import { Bot, Search, BarChart3, History, Settings, HelpCircle, MessageCircle, Lock, Heart } from 'lucide-react';
 
 const Footer = () => {
   return (
@@ -16,7 +17,7 @@ const Footer = () => {
           >
             <div className="flex items-center space-x-3 mb-6">
               <div className="w-12 h-12 bg-gradient-to-r from-blue-500 to-purple-600 rounded-2xl flex items-center justify-center">
-                <span className="text-white font-bold text-xl">🤖</span>
+                <Bot className="w-6 h-6 text-white" />
               </div>
               <div>
                 <h3 className="text-2xl font-extrabold gradient-text">DeepFake Detector</h3>
@@ -53,25 +54,25 @@ const Footer = () => {
             <ul className="space-y-3">
               <li>
                 <Link to="/analyze" className="text-gray-300 hover:text-white transition-colors flex items-center">
-                  <span className="mr-2">🔍</span>
+                  <Search className="w-4 h-4 mr-2" />
                   Analyze Content
                 </Link>
               </li>
               <li>
                 <Link to="/dashboard" className="text-gray-300 hover:text-white transition-colors flex items-center">
-                  <span className="mr-2">📊</span>
+                  <BarChart3 className="w-4 h-4 mr-2" />
                   Dashboard
                 </Link>
               </li>
               <li>
                 <Link to="/history" className="text-gray-300 hover:text-white transition-colors flex items-center">
-                  <span className="mr-2">📜</span>
+                  <History className="w-4 h-4 mr-2" />
                   Analysis History
                 </Link>
               </li>
               <li>
                 <Link to="/settings" className="text-gray-300 hover:text-white transition-colors flex items-center">
-                  <span className="mr-2">⚙️</span>
+                  <Settings className="w-4 h-4 mr-2" />
                   Settings
                 </Link>
               </li>
@@ -88,25 +89,25 @@ const Footer = () => {
             <ul className="space-y-3">
               <li>
                 <a href="#" className="text-gray-300 hover:text-white transition-colors flex items-center">
-                  <span className="mr-2">📚</span>
+                  <HelpCircle className="w-4 h-4 mr-2" />
                   Documentation
                 </a>
               </li>
               <li>
                 <a href="#" className="text-gray-300 hover:text-white transition-colors flex items-center">
-                  <span className="mr-2">❓</span>
+                  <HelpCircle className="w-4 h-4 mr-2" />
                   Help Center
                 </a>
               </li>
               <li>
                 <a href="#" className="text-gray-300 hover:text-white transition-colors flex items-center">
-                  <span className="mr-2">💬</span>
+                  <MessageCircle className="w-4 h-4 mr-2" />
                   Contact Us
                 </a>
               </li>
               <li>
                 <a href="#" className="text-gray-300 hover:text-white transition-colors flex items-center">
-                  <span className="mr-2">🔒</span>
+                  <Lock className="w-4 h-4 mr-2" />
                   Privacy Policy
                 </a>
               </li>
@@ -122,7 +123,11 @@ const Footer = () => {
           transition={{ duration: 0.6, delay: 0.6 }}
         >
           <div className="text-gray-300 text-sm mb-4 md:mb-0">
-            © 2024 DeepFake Detector. All rights reserved. Built with ❤️ for digital security.
+            <div className="flex items-center gap-1">
+              © 2024 DeepFake Detector. All rights reserved. Built with 
+              <Heart className="w-4 h-4 text-red-500" />
+              for digital security.
+            </div>
           </div>
           <div className="flex items-center space-x-6">
             <div className="flex items-center space-x-2 text-sm text-gray-300">

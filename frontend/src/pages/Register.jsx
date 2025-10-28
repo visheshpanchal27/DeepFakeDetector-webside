@@ -476,7 +476,7 @@ const Register = () => {
 
               <section>
                 <h3 className="text-sm font-bold text-gray-900 mb-1.5">14. Contact</h3>
-                <p>Questions: <span className="font-semibold text-blue-600">legal@deepfakedetector.com</span></p>
+                <p>Questions: <a href="mailto:deepfakedetector2.0@gmail.com" className="font-semibold text-blue-600 hover:underline">legal@deepfakedetector.com</a></p>
               </section>
             </div>
             <div className="sticky bottom-0 bg-gray-50 px-6 py-3 border-t border-gray-200 rounded-b-3xl z-10">

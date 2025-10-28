@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { CheckCircle, AlertTriangle, Lock, BarChart3, Brain, Microscope, Search, Droplets, Camera, Lightbulb, Triangle, Sparkles, Clock, Video, Volume2, Eye, Moon, HelpCircle, Bot, X } from 'lucide-react';
 
 const ResultCard = React.memo(({ result }) => {
   const [expandedMethod, setExpandedMethod] = useState(null);
@@ -104,7 +105,11 @@ const ResultCard = React.memo(({ result }) => {
           <div className="absolute top-0 right-0 w-20 h-20 bg-white opacity-10 rounded-full -mr-10 -mt-10"></div>
           <div className="relative z-10 flex items-center space-x-3">
             <div className="text-3xl">
-              {result.classification === 'AUTHENTIC_HUMAN' ? '✅' : '🚨'}
+              {result.classification === 'AUTHENTIC_HUMAN' ? (
+                <CheckCircle className="w-8 h-8 text-white" />
+              ) : (
+                <AlertTriangle className="w-8 h-8 text-white" />
+              )}
             </div>
             <div>
               <div className="text-xs text-white opacity-80 uppercase tracking-wider">Classification</div>
@@ -135,7 +140,15 @@ const ResultCard = React.memo(({ result }) => {
           <div className="absolute top-0 right-0 w-20 h-20 bg-white opacity-10 rounded-full -mr-10 -mt-10"></div>
           <div className="relative z-10 flex items-center space-x-3">
             <div className="text-3xl">
-              {result.risk_level === 'SAFE' ? '🔒' : result.risk_level === 'LOW' ? '✅' : result.risk_level === 'MEDIUM' ? '⚠️' : '🚨'}
+              {result.risk_level === 'SAFE' ? (
+                <Lock className="w-8 h-8 text-white" />
+              ) : result.risk_level === 'LOW' ? (
+                <CheckCircle className="w-8 h-8 text-white" />
+              ) : result.risk_level === 'MEDIUM' ? (
+                <AlertTriangle className="w-8 h-8 text-white" />
+              ) : (
+                <AlertTriangle className="w-8 h-8 text-white" />
+              )}
             </div>
             <div>
               <div className="text-xs text-white opacity-80 uppercase tracking-wider">Risk Assessment</div>
@@ -155,7 +168,7 @@ const ResultCard = React.memo(({ result }) => {
         >
           <div className="flex items-center justify-between mb-5">
             <h4 className="font-bold text-gray-900 text-xl flex items-center">
-              <span className="text-2xl mr-3">📊</span>
+              <BarChart3 className="w-6 h-6 mr-3" />
               Detection Methods Breakdown
             </h4>
             <button
@@ -174,22 +187,22 @@ const ResultCard = React.memo(({ result }) => {
           <div className="space-y-4 bg-gradient-to-br from-gray-50 to-gray-100 p-6 rounded-2xl border border-gray-200">
             {Object.entries(result.individual_scores).map(([method, score], index) => {
               const getMethodIcon = (methodName) => {
-                if (methodName.includes('deep') || methodName.includes('learning')) return '🧠';
-                if (methodName.includes('forensic')) return '🔬';
-                if (methodName.includes('texture')) return '🔍';
-                if (methodName.includes('watermark')) return '💧';
-                if (methodName.includes('metadata') || methodName.includes('camera')) return '📷';
-                if (methodName.includes('Lighting')) return '💡';
-                if (methodName.includes('Geometry') || methodName.includes('Facial')) return '📐';
-                if (methodName.includes('Enhancement')) return '✨';
-                if (methodName.includes('Frequency')) return '📊';
-                if (methodName.includes('Temporal')) return '⏱️';
-                if (methodName.includes('Motion')) return '🎬';
-                if (methodName.includes('Audio')) return '🔊';
-                if (methodName.includes('Eye')) return '👁️';
-                if (methodName.includes('Blink')) return '👀';
-                if (methodName.includes('Shadow')) return '🌑';
-                return '🔬';
+                if (methodName.includes('deep') || methodName.includes('learning')) return <Brain className="w-6 h-6" />;
+                if (methodName.includes('forensic')) return <Microscope className="w-6 h-6" />;
+                if (methodName.includes('texture')) return <Search className="w-6 h-6" />;
+                if (methodName.includes('watermark')) return <Droplets className="w-6 h-6" />;
+                if (methodName.includes('metadata') || methodName.includes('camera')) return <Camera className="w-6 h-6" />;
+                if (methodName.includes('Lighting')) return <Lightbulb className="w-6 h-6" />;
+                if (methodName.includes('Geometry') || methodName.includes('Facial')) return <Triangle className="w-6 h-6" />;
+                if (methodName.includes('Enhancement')) return <Sparkles className="w-6 h-6" />;
+                if (methodName.includes('Frequency')) return <BarChart3 className="w-6 h-6" />;
+                if (methodName.includes('Temporal')) return <Clock className="w-6 h-6" />;
+                if (methodName.includes('Motion')) return <Video className="w-6 h-6" />;
+                if (methodName.includes('Audio')) return <Volume2 className="w-6 h-6" />;
+                if (methodName.includes('Eye')) return <Eye className="w-6 h-6" />;
+                if (methodName.includes('Blink')) return <Eye className="w-6 h-6" />;
+                if (methodName.includes('Shadow')) return <Moon className="w-6 h-6" />;
+                return <Microscope className="w-6 h-6" />;
               };
               
               const getScoreColor = (score) => {
@@ -274,7 +287,13 @@ const ResultCard = React.memo(({ result }) => {
                         className="px-4 pb-4 bg-gray-50 border-t border-gray-200"
                       >
                         <div className="pt-3 space-y-2 text-sm text-gray-600">
-                          <p><strong>Status:</strong> {normalizedScore >= 80 ? '✅ Passed' : normalizedScore >= 60 ? '⚠️ Warning' : '❌ Failed'}</p>
+                          <p><strong>Status:</strong> {normalizedScore >= 80 ? (
+                            <span className="inline-flex items-center gap-1"><CheckCircle className="w-3 h-3" /> Passed</span>
+                          ) : normalizedScore >= 60 ? (
+                            <span className="inline-flex items-center gap-1"><AlertTriangle className="w-3 h-3" /> Warning</span>
+                          ) : (
+                            <span className="inline-flex items-center gap-1"><X className="w-3 h-3" /> Failed</span>
+                          )}</p>
                           <p><strong>Confidence:</strong> {normalizedScore >= 80 ? 'High' : normalizedScore >= 60 ? 'Medium' : 'Low'}</p>
                         </div>
                       </motion.div>
@@ -296,7 +315,7 @@ const ResultCard = React.memo(({ result }) => {
         >
           <div className="flex items-center space-x-3">
             <div className="w-8 h-8 rounded-full flex items-center justify-center bg-yellow-100">
-              <span className="text-lg">❓</span>
+              <HelpCircle className="w-5 h-5 text-yellow-600" />
             </div>
             <div>
               <p className="text-sm font-medium text-yellow-800">
@@ -321,7 +340,7 @@ const ResultCard = React.memo(({ result }) => {
         >
           <div className="flex items-center space-x-3">
             <div className="w-8 h-8 rounded-full flex items-center justify-center bg-orange-100">
-              <span className="text-lg">🤖</span>
+              <Bot className="w-5 h-5 text-orange-600" />
             </div>
             <div>
               <p className="text-sm font-medium text-orange-800">
@@ -343,7 +362,11 @@ const ResultCard = React.memo(({ result }) => {
       >
         <div className="flex items-start space-x-4">
           <div className={`w-12 h-12 rounded-full flex items-center justify-center ${result.is_deepfake ? 'bg-red-100' : 'bg-green-100'} flex-shrink-0`}>
-            <span className="text-2xl">{result.is_deepfake ? '🚨' : '✅'}</span>
+            {result.is_deepfake ? (
+              <AlertTriangle className="w-6 h-6 text-red-600" />
+            ) : (
+              <CheckCircle className="w-6 h-6 text-green-600" />
+            )}
           </div>
           <div className="flex-1">
             <p className={`text-base font-bold ${result.is_deepfake ? 'text-red-900' : 'text-green-900'} mb-2`}>

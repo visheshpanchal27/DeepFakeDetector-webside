@@ -7,50 +7,49 @@ echo   DeepFake Detector - Quick Start
 echo ========================================
 echo.
 
-:: Check if configured
+:: Check if .env exists
 if not exist "backend\.env" (
     echo [INFO] First time setup required
-    echo Running first-time setup...
+    echo Running complete setup...
     echo.
     call FIRST_TIME_SETUP.bat
     exit /b
 )
 
-:: Check if dependencies installed
-if not exist "backend\venv" if not exist "frontend\node_modules" (
-    echo [INFO] Dependencies not found
-    echo Installing dependencies...
-    echo.
-    
-    echo Installing backend dependencies...
-    cd backend
-    pip install -r requirements.txt
-    cd ..
-    
-    echo Installing frontend dependencies...
-    cd frontend
-    call npm install
-    cd ..
-    echo.
+echo [INFO] Configuration found. Starting application...
+echo.
+
+:: Determine Python command
+set PYTHON_CMD=py
+py --version >nul 2>&1
+if %errorLevel% neq 0 (
+    set PYTHON_CMD=python
+    python --version >nul 2>&1
+    if %errorLevel% neq 0 (
+        set PYTHON_CMD=python3
+    )
 )
 
-echo Starting DeepFake Detector...
-echo.
+echo Starting servers...
 echo Backend: http://localhost:8000
 echo Frontend: http://localhost:3000
 echo.
+echo Press Ctrl+C in server windows to stop
+echo.
 
 :: Start backend
-start "DeepFake Detector - Backend" cmd /k "cd backend && python app_new.py"
+start "Backend Server" cmd /k "cd backend && %PYTHON_CMD% app_new.py"
 
-:: Wait for backend
-timeout /t 5 /nobreak >nul
-
-:: Start frontend
-start "DeepFake Detector - Frontend" cmd /k "cd frontend && npm start"
+:: Wait and start frontend
+timeout /t 3 /nobreak >nul
+start "Frontend Server" cmd /k "cd frontend && npm start"
 
 echo.
-echo Application started successfully!
-echo Two new windows opened - close them to stop servers
+echo ========================================
+echo   Servers Started!
+echo ========================================
+echo.
+echo Two new windows opened for servers
+echo This window can be closed
 echo.
 pause

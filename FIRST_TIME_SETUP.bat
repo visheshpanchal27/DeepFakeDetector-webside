@@ -23,6 +23,14 @@ if exist "backend\.env" (
     goto :start_app
 )
 
+:: Check if .env.example exists (for GitHub users)
+if not exist "backend\.env.example" (
+    echo [ERROR] This appears to be an incomplete download
+    echo Please ensure you have all project files
+    pause
+    exit /b 1
+)
+
 echo [STEP 1/5] Checking Python installation...
 set PYTHON_CMD=
 py --version >nul 2>&1
@@ -103,18 +111,34 @@ echo.
 echo [STEP 5/5] Configuration Setup
 echo ========================================
 echo.
+echo IMPORTANT: You need to create accounts for:
+echo 1. MongoDB Atlas (free): https://www.mongodb.com/atlas
+echo 2. Gmail App Password: https://support.google.com/accounts/answer/185833
+echo 3. Cloudinary (free): https://cloudinary.com/
+echo.
 echo Please enter your configuration details:
-echo (You can find these in your accounts)
+echo (Leave blank and press Enter to use defaults for testing)
 echo.
 
 :: Create backend .env file
 echo Creating backend configuration...
-set /p MONGODB_URI="MongoDB URI: "
-set /p SMTP_EMAIL="Gmail Email: "
-set /p SMTP_PASSWORD="Gmail App Password: "
-set /p CLOUDINARY_CLOUD_NAME="Cloudinary Cloud Name: "
-set /p CLOUDINARY_API_KEY="Cloudinary API Key: "
-set /p CLOUDINARY_API_SECRET="Cloudinary API Secret: "
+set /p MONGODB_URI="MongoDB URI (or press Enter for local): "
+if "%MONGODB_URI%"=="" set MONGODB_URI=mongodb://localhost:27017/deepfake_detector
+
+set /p SMTP_EMAIL="Gmail Email (or press Enter to skip): "
+if "%SMTP_EMAIL%"=="" set SMTP_EMAIL=your_email@gmail.com
+
+set /p SMTP_PASSWORD="Gmail App Password (or press Enter to skip): "
+if "%SMTP_PASSWORD%"=="" set SMTP_PASSWORD=your_app_password
+
+set /p CLOUDINARY_CLOUD_NAME="Cloudinary Cloud Name (or press Enter to skip): "
+if "%CLOUDINARY_CLOUD_NAME%"=="" set CLOUDINARY_CLOUD_NAME=your_cloud_name
+
+set /p CLOUDINARY_API_KEY="Cloudinary API Key (or press Enter to skip): "
+if "%CLOUDINARY_API_KEY%"=="" set CLOUDINARY_API_KEY=your_api_key
+
+set /p CLOUDINARY_API_SECRET="Cloudinary API Secret (or press Enter to skip): "
+if "%CLOUDINARY_API_SECRET%"=="" set CLOUDINARY_API_SECRET=your_api_secret
 
 :: Generate random JWT secret
 set JWT_SECRET=%RANDOM%%RANDOM%%RANDOM%%RANDOM%%RANDOM%
